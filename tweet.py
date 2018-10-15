@@ -103,4 +103,6 @@ def analytics(id):
     plt.plot(t,y_reply,label="reply")
     plt.plot(t,y_total,label="total")
     plt.legend()
+
+    plt.tight_layout()
     plt.show()
