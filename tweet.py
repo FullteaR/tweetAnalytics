@@ -11,12 +11,13 @@ auth.set_access_token(myAccessToken, myAccessTokenSecret)
 api = tweepy.API(auth)
 
 
-def getAllTweet(id):
+def getAllTweet(id,v=True):
     i = 0
     while True:
         tweets = api.user_timeline(id=id, page=i)
         for tweet in tweets:
-            print(tweet.text)
+            if v:
+                print(tweet.text)
             yield tweet
         i += 1
         if len(tweets) == 0:
@@ -43,8 +44,6 @@ def analytics(id):
     本プログラムは法律、条例等に違反しない範囲でご利用ください。
     """
     t = []
-    m = 10**10
-    M = 0
     tweet = []
     RT = []
     reply = []
@@ -140,3 +139,7 @@ def analytics(id):
     plt.legend()
 
     plt.show()
+
+
+if __name__=="__main__":
+    analytics("bot_41th")
