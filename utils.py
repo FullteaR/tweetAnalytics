@@ -11,7 +11,7 @@ auth.set_access_token(myAccessToken, myAccessTokenSecret)
 api = tweepy.API(auth)
 
 
-def getAllTweet(id,v=True):
+def getAllTweet(id, v=True):
     i = 0
     while True:
         tweets = api.user_timeline(id=id, page=i)
@@ -107,7 +107,7 @@ def analytics(id):
     plt.xlabel("day")
     plt.ylabel("tweet")
     plt.scatter(t, y_tweet_sum, label="tweet")
-    plt.scatter(t, y_reply_sum, label="reply",c="green")
+    plt.scatter(t, y_reply_sum, label="reply", c="green")
     plt.scatter(t, y_total_sum, label="total", c="red")
     plt.legend()
 
@@ -134,39 +134,12 @@ def analytics(id):
     plt.xlabel("day")
     plt.ylabel("tweet")
     plt.plot(t, y_tweet_sum, label="tweet")
-    plt.plot(t, y_reply_sum, label="reply",c="green")
+    plt.plot(t, y_reply_sum, label="reply", c="green")
     plt.plot(t, y_total_sum, label="total", c="red")
     plt.legend()
 
     plt.show()
 
-"""
-if __name__=="__main__":
-    flag=True
-    i=0
-    dict={}
-    favs=[]
-    while flag:
-        try:
-            favs=api.favorites(page=i)
-        except tweepy.error.RateLimitError:
-            flag=False
-        if len(favs)==0:
-            flag=False
-        if flag:
-            for fav in favs:
-                screen_name=fav.user.screen_name
-                dict[screen_name]=dict.get(screen_name,0)+1
-        i+=1
-    print(dict)
-    height=list(dict.values())
-    left=[i+1 for i in range(len(height))]
-    label=list(dict.keys())
-    plt.bar(left,height,tick_label=label,align="center")
-    plt.xlabel("screen name")
-    plt.ylabel("num of favs")
-    plt.show()
-    """
 
-if __name__=="__main__":
+if __name__ == "__main__":
     analytics(sys.argv[1])
