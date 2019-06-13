@@ -32,7 +32,7 @@ for account in accounts:
         reply = tweet.in_reply_to_user_id
         user_id = tweet.user.id
         screen_name = tweet.user.screen_name
-        df_test = df_test.append(pd.DataFrame([[id, text, reply, created_at, user_id, screen_name]], columns=[
+        df_train = df_train.append(pd.DataFrame([[id, text, reply, created_at, user_id, screen_name]], columns=[
             "id", "text", "reply", "created_at", "user_id", "screen_name"]), ignore_index=True)
 
 df_train.to_excel("train.xlsx")
