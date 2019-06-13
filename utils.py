@@ -3,6 +3,7 @@ from keys import consumerKey, consumerSecret, myAccessToken, myAccessTokenSecret
 import sys
 import matplotlib.pyplot as plt
 import datetime
+import time
 
 
 auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
@@ -11,10 +12,14 @@ auth.set_access_token(myAccessToken, myAccessTokenSecret)
 api = tweepy.API(auth)
 
 
-def getAllTweet(id, v=True):
-    i = 0
+def getAllTweet(id, v=False):
+    i = 1
     while True:
-        tweets = api.user_timeline(id=id, page=i)
+        try:
+            tweets = api.user_timeline(id=id, page=i)
+        except:
+            time.sleep(60)
+            continue
         for tweet in tweets:
             if v:
                 print(tweet.text)
@@ -24,7 +29,7 @@ def getAllTweet(id, v=True):
             return
 
 
-def weatherRT(tweet):  # あまり良くない実装なのは気がついているよ
+def whetherRT(tweet):  # あまり良くない実装なのは気がついているよ
     try:
         id = tweet.retweeted_status.author.screen_name
         return True
@@ -32,10 +37,10 @@ def weatherRT(tweet):  # あまり良くない実装なのは気がついてい�
         return False
 
 
-def weatherReply(tweet):  # 簡易実装
+def whetherReply(tweet):  # 簡易実装
     if tweet.text[0] == "@":
-        return True
-    return False
+        return tweet.text.split(" ")[0]
+    return None
 
 
 def analytics(id):
@@ -54,9 +59,9 @@ def analytics(id):
         for t in getAllTweet(id):
             stamp = int(t.created_at.timestamp())
             day = stamp // (24 * 60 * 60)
-            if weatherRT(t):
+            if whetherRT(t):
                 RT.append(day)
-            elif weatherReply(t):
+            elif whetherReply(t):
                 reply.append(day)
                 reply_sum.append(len(t.text))
             else:
