@@ -21,8 +21,8 @@ def getTimeStamps(id,m=0,M=sys.maxsize):
         _stamp=stamp
         stamp = stamp // (24 * 60 * 60)
         if (stamp>m and stamp<M):
-            #result.append(stamp)
-            result.append((_stamp-stamp*24*60*60)//3600)
+            result.append(stamp)
+            #result.append((_stamp-stamp*24*60*60)//3600)
 
         if stamp<m:
             break
@@ -33,8 +33,8 @@ def getTimeStamps(id,m=0,M=sys.maxsize):
 stamps41=getTimeStamps(bot)
 m=np.min(stamps41)
 M=np.max(stamps41)
-#x41=[0 for i in range(m,M+1)]
-x41=[0 for i in range(0,25)]
+x41=[0 for i in range(m,M+1)]
+#x41=[0 for i in range(0,25)]
 for stamp in stamps41:
     x41[stamp-m]+=1
 
@@ -46,9 +46,12 @@ phai=[]
 for account in tqdm(accounts):
     tweets=np.zeros_like(x41)
     try:
-        stamps=getTimeStamps(account,m=1532444400//(24*60*60))
+        stamps=getTimeStamps(account,m=m)
         for stamp in stamps:
-            tweets[stamp-m]+=1
+            try:
+                tweets[stamp-m]+=1
+            except IndexError:
+                continue
         tweets=normarize(tweets)
         phai.append(tweets)
         #print("...zzzZZZ")
@@ -69,5 +72,8 @@ for account,_a in zip(accounts,a.coef_):
     result[account]=_a
 result=sorted(result.items(),key=lambda x:-x[1])
 
+
 for i in result:
     print("{0}\t{1}".format(i[0],i[1]))
+
+print(a.intercept_)
