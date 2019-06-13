@@ -140,6 +140,33 @@ def analytics(id):
 
     plt.show()
 
+"""
+if __name__=="__main__":
+    flag=True
+    i=0
+    dict={}
+    favs=[]
+    while flag:
+        try:
+            favs=api.favorites(page=i)
+        except tweepy.error.RateLimitError:
+            flag=False
+        if len(favs)==0:
+            flag=False
+        if flag:
+            for fav in favs:
+                screen_name=fav.user.screen_name
+                dict[screen_name]=dict.get(screen_name,0)+1
+        i+=1
+    print(dict)
+    height=list(dict.values())
+    left=[i+1 for i in range(len(height))]
+    label=list(dict.keys())
+    plt.bar(left,height,tick_label=label,align="center")
+    plt.xlabel("screen name")
+    plt.ylabel("num of favs")
+    plt.show()
+    """
 
 if __name__=="__main__":
-    analytics("bot_41th")
+    analytics(sys.argv[1])
