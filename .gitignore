@@ -8,3 +8,5 @@ data\.py
 \.DS_Store
 
 *.xlsx
+
+\.ipynb_checkpoints/analytics-checkpoint\.ipynb
