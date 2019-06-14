@@ -7,4 +7,4 @@ data\.py
 
 \.DS_Store
 
-test\.xlsx
+*.xlsx
